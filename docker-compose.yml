@@ -13,12 +13,12 @@ services:
       dockerfile: Dockerfile
     image: newman
     command:
-      run "https://www.postman.com/collections/29800373-595b2c38-79f7-4fd2-bc40-f89df17be89e" -k
-      -e "enviroments/REQRES.IN.postman_environment.json"
-      -r cli,json,htmlextra,allure
-      --reporter-json-export="reports/reqres.in.json"
+      run "https://www.postman.com/collections/29800373-595b2c38-79f7-4fd2-bc40-f89df17be89e" -k \
+      -e "reqres_env.json" \
+      -r cli,json,htmlextra,allure \
+      --reporter-json-export=".newman/reqres.in.json" \
       --reporter-htmlextra-export ./newman/index.html
     volumes:
-      - ./newman:/etc/newman
+      - ./docker_share:/etc/postman
     networks:
       - app_network
