@@ -7,11 +7,11 @@ networks:
 
 services:
   postman:
-    image: mynewman
     container_name: postmanTests
     build:
       context: ./newman
       dockerfile: Dockerfile
+    image: mynewman
     volumes:
       - /home/vit/ts_project/postman/docker_share:/srv/postman
     command:
