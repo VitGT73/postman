@@ -1,0 +1,33 @@
+FROM node:lts-slim
+# RUN npm install -g newman newman-reporter-htmlextra newman-reporter-allure
+
+ARG PROJECT_NAME=postman
+ARG GROUP_ID=5000
+ARG USER_ID=5000
+
+RUN echo "Building with PROJECT_NAME=${PROJECT_NAME}, GROUP_ID=${GROUP_ID}, USER_ID=${USER_ID}" && \
+    groupadd --gid ${GROUP_ID} ${PROJECT_NAME} && \
+    useradd --home-dir /home/${PROJECT_NAME} --create-home --uid ${USER_ID} \
+    --gid ${GROUP_ID} --shell /bin/sh --skel /dev/null ${PROJECT_NAME} && \
+    mkdir /srv/${PROJECT_NAME} && \
+    chown -R ${PROJECT_NAME}:${PROJECT_NAME} /srv/${PROJECT_NAME}
+
+RUN npm install -g newman newman-reporter-htmlextra newman-reporter-allure
+# RUN mkdir /srv/postman
+WORKDIR /srv/postman
+# WORKDIR /srv/${PROJECT_NAME}
+
+COPY ./environments/reqres_env.json .
+# RUN chown -R node:node /app
+
+# USER ${REMOTE_USER}
+USER ${USER_ID}
+# Set newman as the default container command
+# ENTRYPOINT ["newman"]
+# ENTRYPOINT ["bin/bash"]
+# ENTRYPOINT ["sh", "-c", "touch /srv/postman/test_file.txt && newman"]
+# ENTRYPOINT ["sh", "-c", "touch /srv/postman/test_file.txt"]
+# CMD ["newman"]
+CMD ["sh"]
+# Оставить контейнер запущенным
+# docker run -it --rm --name mynode node:lts-slim "bin/sh"
