@@ -1,22 +1,30 @@
 name: Postman_tests
 
-on: [push]
+on:
+  push:
+    branches:
+      - main  # Или другая ветка, в которой вы хотите выполнять тесты
 
 jobs:
   newman:
     runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@2
-        - name: Run Neman via docker-compose
-          run: |
-            docker compose up --exit-code-from postman || true
-        - name: Generate Allure report
-          run: |
-            sudo docker compose run
-        - name: Deploy to GitHub Pages
-          uses: JamesIves/github-pages-deploy-action@4.1.5
-          with:
-            token: ${{ secrets.GHT_TOKEN }}
-            branch: gh-pages
-            folder: allure-report
-            clean: true
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run Newman via docker-compose
+        run: |
+          docker-compose up --exit-code-from postman || true
+
+      - name: Generate Allure report
+        run: |
+          sudo docker-compose run postman
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          token: ${{ secrets.GHT_TOKEN }}
+          branch: gh-pages
+          folder: allure-report
+          clean: true
