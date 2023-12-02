@@ -35,7 +35,6 @@ services:
     - ./shara:/opt/allure/
     command: /bin/sh -c "allure generate allure-results --clean -o allure-report"
     # command: /bin/sh -c "ls -la && allure generate allure-results --clean -o allure-report" && bin/sh
-    restart: no
     networks:
       - app_network
 
