@@ -15,7 +15,7 @@ jobs:
 
       - name: Run Newman via docker-compose
         run: |
-          docker compose up --exit-code-from postman || true
+          docker compose up postman
 
       - name: Generate Allure report
         run: |
