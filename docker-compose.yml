@@ -11,34 +11,31 @@ services:
     build:
       context: ./newman
       dockerfile: Dockerfile
-      # env_file:
-      # - "local.env"
-      # args:
-      #   USER_ID: ${USER_ID:-0}
-      #   GROUP_ID: ${GROUP_ID:-0}
-    image: mynewman
+    image: postman
     volumes:
-      # sudo chmod -R 777 ./docker_share
-      - ${PWD}/docker_share:/srv/postman
+      - ${PWD}/shara:/opt/postman/
     command:
       run "https://www.postman.com/collections/29800373-595b2c38-79f7-4fd2-bc40-f89df17be89e" -k \
       -e "reqres_env.json"
       -r cli,json,htmlextra,allure
-      --reporter-json-export="/srv/postman/report.json"
-      --reporter-htmlextra-export /srv/postman/index-htmlextra.html
-      --reporter-allure-export /srv/postman/allure-results
-
+      --reporter-json-export="/opt/postman/report/report.json"
+      --reporter-htmlextra-export /opt/postman/report/index-htmlextra.html
+      --reporter-allure-export /opt/postman/allure-results
     restart: no
     networks:
       - app_network
+
   allure:
-    image: "frankescobar/allure-docker-service"
-    environment:
-      CHECK_RESULTS_EVERY_SECONDS: NONE
-      KEEP_HISTORY: 1
-      KEEP_HISTORY_LATEST: 25
-    ports:
-      - "5050:5050"
+    depends_on:
+      - postman
+    container_name: allureTests
+    build:
+      context: ./allure
+      dockerfile: Dockerfile
+    image: allure
     volumes:
-      - ${PWD}/docker_share/allure-results:/app/allure-results
-      - ${PWD}/docker_share/default-reports:/app/default-reports
+    - ${PWD}/shara:/opt/allure/
+    command: /bin/sh -c "ls -la && allure generate --clean" && bin/sh
+    restart: no
+    networks:
+      - app_network
