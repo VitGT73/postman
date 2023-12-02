@@ -39,3 +39,16 @@ services:
     restart: no
     networks:
       - app_network
+
+  # Allure запускается как сервер и не работает постоянно
+  # allure:
+  #   image: "frankescobar/allure-docker-service"
+  #   environment:
+  #     CHECK_RESULTS_EVERY_SECONDS: NONE
+  #     KEEP_HISTORY: 1
+  #     KEEP_HISTORY_LATEST: 25
+  #   ports:
+  #     - "5050:5050"
+  #   volumes:
+  #     - ${PWD}/docker_share/allure-results:/app/allure-results
+  #     - ${PWD}/docker_share/default-reports:/app/default-reports
