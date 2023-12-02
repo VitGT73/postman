@@ -21,7 +21,6 @@ services:
       --reporter-json-export="/opt/postman/report/report.json"
       --reporter-htmlextra-export /opt/postman/report/index-htmlextra.html
       --reporter-allure-export /opt/postman/allure-results
-    restart: no
     networks:
       - app_network
 
