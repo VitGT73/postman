@@ -26,4 +26,4 @@ WORKDIR ${ROOT}
 # Указываем пользователя, от имени которого будет выполняться приложение
 USER ${APP}
 
-ENTRYPOINT [ "allure" ]
+CMD [ "allure" , "--help"]

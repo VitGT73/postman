@@ -11,4 +11,8 @@ RUN npm install -g newman newman-reporter-htmlextra newman-reporter-allure \
 WORKDIR ${ROOT}
 USER node
 
-ENTRYPOINT ["newman"]
+CMD ["newman" "-v"]
+# ENTRYPOINT ["newman"]
+# COPY entrypoint.sh /entrypoint.sh
+
+# ENTRYPOINT ["/entrypoint.sh"]
