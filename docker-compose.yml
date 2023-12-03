@@ -1,9 +1,9 @@
 version: '3.9'
 
-networks:
-  app_network:
-    name: runtest
-    driver: bridge
+# networks:
+#   app_network:
+#     name: runtest
+#     driver: bridge
 
 services:
   postman:
@@ -11,31 +11,31 @@ services:
     build:
       context: ./newman
       dockerfile: Dockerfile
-    image: postman
+    image: vitgt/newman-htmlextra-allure
     volumes:
       - ./shara:/etc/postman/
     command:
-      run "https://www.postman.com/collections/29800373-595b2c38-79f7-4fd2-bc40-f89df17be89e" -k \
+      newman run "https://www.postman.com/collections/29800373-595b2c38-79f7-4fd2-bc40-f89df17be89e" -k \
       -e "reqres_env.json"
       -r cli,json,htmlextra,allure
       --reporter-json-export="/etc/postman/report/report.json"
       --reporter-htmlextra-export /etc/postman/report/index-htmlextra.html
       --reporter-allure-export /etc/postman/allure-results
-    networks:
-      - app_network
+    # networks:
+    #   - app_network
 
   allure:
     container_name: allureTests
     build:
       context: ./allure
       dockerfile: Dockerfile
-    image: allure
+    image: vitgt/allure-report
     volumes:
-    - ./shara:/opt/allure/
+    - ./shara:/etc/allure/
     command: /bin/sh -c "allure generate allure-results --clean -o allure-report"
     # command: /bin/sh -c "ls -la && allure generate allure-results --clean -o allure-report" && bin/sh
-    networks:
-      - app_network
+    # networks:
+    #   - app_network
 
   # Allure запускается как сервер и не работает постоянно
   # allure:

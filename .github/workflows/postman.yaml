@@ -26,7 +26,7 @@ jobs:
         with:
           image: vitgt/newman-htmlextra-allure:latest
           options:
-            -v ./shara:/etc/postman
+            -v ./:/etc/postman
           # -e "reqres_env.json"
           run: /bin/sh -c "ls -la && pwd" &&
             newman run "https://www.postman.com/collections/29800373-595b2c38-79f7-4fd2-bc40-f89df17be89e" -k \
@@ -54,3 +54,4 @@ jobs:
           branch: gh-pages
           folder: allure-report
           clean: true
+          # -v ${{ github.workspace }}:/work
