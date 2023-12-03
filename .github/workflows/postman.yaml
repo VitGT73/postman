@@ -26,7 +26,6 @@ jobs:
         with:
           image: vitgt/newman-htmlextra-allure:latest
           options:
-          #   -v ${{ github.workspace }}:/etc/postman
             -v ./:/etc/postman
           # -e "reqres_env.json"
           run: /bin/sh -c "ls -la && pwd" &&
@@ -45,7 +44,6 @@ jobs:
         with:
           image: vitgt/allure-report
           options:
-            # -v ${{ github.workspace}}:/etc/allure
             -v ./:/etc/allure
           run: /bin/sh -c "ls -la && pwd" &&
             allure generate
