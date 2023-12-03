@@ -1,4 +1,4 @@
-# Stage 1: Build stage
+# docker build -t vitgt/gha-newman-htmlextra-allure .
 FROM node:lts-slim as builder
 
 ARG APP=postman
@@ -8,8 +8,8 @@ RUN npm install -g newman newman-reporter-htmlextra newman-reporter-allure \
     && mkdir -p ${ROOT} \
     && chown -R node:node ${ROOT}
 
-WORKDIR ${ROOT}
-USER node
+# WORKDIR ${ROOT}
+# USER node
 
 CMD ["newman" "-v"]
 # ENTRYPOINT ["newman"]
