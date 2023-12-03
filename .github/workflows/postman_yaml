@@ -1,0 +1,66 @@
+name: Postman_tests
+
+on: workflow_dispatch
+  # push:
+  #   branches:
+  #     - main  # Или другая ветка, в которой вы хотите выполнять тесты
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  newman:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Check dir before
+        run: /bin/sh -c "ls -la && pwd"
+
+      # - name: Create dir shara
+      #   run: mkdir shara
+
+      - name: Run Newman via docker-compose
+        run: |
+          sudo docker-compose up postman
+
+      - name: Generate Allure report via docker-compose
+        run: |
+          sudo docker-compose up allure
+        # continue-on-error: true
+        # uses: addnab/docker-run-action@v3
+        # with:
+        #   image: vitgt/newman-htmlextra-allure:latest
+        #   options:
+        #     -v ./:/etc/postman
+        #   # -e "reqres_env.json"
+        #   run: /bin/sh -c "ls -la && pwd" &&
+        #     newman run "https://www.postman.com/collections/29800373-595b2c38-79f7-4fd2-bc40-f89df17be89e" -k \
+        #     -e "reqres_env.json"
+        #     -r cli,json,allure,htmlextra
+        #     --reporter-json-export="/etc/postman/report.json"
+        #     --reporter-htmlextra-export /etc/postman/index-htmlextra.html
+        #     --reporter-allure-export /etc/postman/allure-results \
+        #     && /bin/sh -c "ls -la && pwd"
+      # - name: Check dir after
+      #   run: /bin/sh -c "ls -la && pwd"
+
+      # - name: Generate Allure report
+      #   uses: addnab/docker-run-action@v3
+      #   with:
+      #     image: vitgt/allure-report
+      #     options:
+      #       -v /shara:/etc/allure
+      #     run: /bin/sh -c "ls -la && pwd" &&
+      #       allure generate
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          token: ${{ secrets.GHT_TOKEN }}
+          branch: gh-pages
+          folder: allure-report
+          clean: true
+          # -v ${{ github.workspace }}:/work
