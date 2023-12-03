@@ -25,11 +25,11 @@ jobs:
 
       - name: Run Newman via docker-compose
         run: |
-          docker-compose up postman
+          sudo docker-compose up postman
 
       - name: Generate Allure report via docker-compose
         run: |
-          docker-compose up allure
+          sudo docker-compose up allure
         # continue-on-error: true
         # uses: addnab/docker-run-action@v3
         # with:
