@@ -21,7 +21,7 @@ jobs:
         run: /bin/sh -c "ls -la && pwd"
 
       - name: Run Newman via docker-compose
-        continue-on-error: true
+        # continue-on-error: true
         uses: addnab/docker-run-action@v3
         with:
           image: vitgt/newman-htmlextra-allure:latest
