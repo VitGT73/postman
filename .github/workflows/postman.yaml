@@ -42,9 +42,9 @@ jobs:
       - name: Generate Allure report
         uses: addnab/docker-run-action@v3
         with:
-          image: vitgt/allure-report
+          image: vitgt/gha-allure-report
           options:
-            -v xxx:/etc/allure
+            -v ${{ github.workspace }}:/etc/allure
           run: /bin/sh -c "ls -la && pwd" &&
             allure generate
       - name: Deploy to GitHub Pages
