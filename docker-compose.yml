@@ -18,9 +18,9 @@ services:
       run "https://www.postman.com/collections/29800373-595b2c38-79f7-4fd2-bc40-f89df17be89e" -k \
       -e "reqres_env.json"
       -r cli,json,htmlextra,allure
-      --reporter-json-export="/opt/postman/report/report.json"
-      --reporter-htmlextra-export /opt/postman/report/index-htmlextra.html
-      --reporter-allure-export /opt/postman/allure-results
+      --reporter-json-export="/etc/postman/report/report.json"
+      --reporter-htmlextra-export /etc/postman/report/index-htmlextra.html
+      --reporter-allure-export /etc/postman/allure-results
     networks:
       - app_network
 
