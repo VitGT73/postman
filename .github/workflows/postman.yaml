@@ -20,6 +20,9 @@ jobs:
       - name: Check dir before
         run: /bin/sh -c "ls -la && pwd"
 
+      - name: Create dir shara
+        run: mkdir shara
+
       - name: Run Newman via docker-compose
         run: |
           docker-compose up postman

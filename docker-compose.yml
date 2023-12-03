@@ -7,11 +7,12 @@ version: '3.9'
 
 services:
   postman:
-    container_name: postmanTests
-    build:
-      context: ./newman
-      dockerfile: Dockerfile
     image: vitgt/newman-htmlextra-allure
+    container_name: postmanTests
+    # build:
+    #   context: ./newman
+    #   dockerfile: Dockerfile
+    # image: vitgt/newman-htmlextra-allure
     volumes:
       - ./shara:/etc/postman/
     command:
@@ -25,11 +26,10 @@ services:
     #   - app_network
 
   allure:
-    container_name: allureTests
-    build:
-      context: ./allure
-      dockerfile: Dockerfile
     image: vitgt/allure-report
+    container_name: allureTests
+
+
     volumes:
       - ./shara:/etc/allure/
     command: /bin/sh -c "allure generate allure-results --clean -o allure-report"
