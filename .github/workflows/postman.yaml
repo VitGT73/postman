@@ -28,7 +28,7 @@ jobs:
         with:
           image: vitgt/allure-report
           options:
-            -v ${{ github.workspace}}:/etc/allure
+            -v ${{ github.workspace}}/shara:/etc/allure
           run: |
             allure generate
       - name: Deploy to GitHub Pages
