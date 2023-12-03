@@ -4,6 +4,10 @@ on: workflow_dispatch
   # push:
   #   branches:
   #     - main  # Или другая ветка, в которой вы хотите выполнять тесты
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   newman:
@@ -14,6 +18,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Run Newman via docker-compose
+        continue-on-error: true
         uses: addnab/docker-run-action@v3
         with:
           image: vitgt/newman-htmlextra-allure:latest
