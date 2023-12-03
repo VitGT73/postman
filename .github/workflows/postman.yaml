@@ -44,7 +44,7 @@ jobs:
         with:
           image: vitgt/allure-report
           options:
-            -v ${{github.workspace}}/aaa:/etc/allure
+            -v ${{github.workflow}}/etc/allure
           run: /bin/sh -c "ls -la && pwd" &&
             allure generate
       - name: Deploy to GitHub Pages
