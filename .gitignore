@@ -2,4 +2,5 @@
 /node_modules/
 .env
 /docker_shared/
-/shara/
+/shara/*
+!shara/reqres_env.json
