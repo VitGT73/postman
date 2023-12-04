@@ -45,13 +45,15 @@ jobs:
             && /bin/sh -c "ls -la && pwd"
 
       - name: Check dir between
-        run: /bin/sh -c "ls -la && pwd"
+        run: /bin/sh -c "cd allure-results && ls -la && pwd"
 
       - name: Copy history from gh-pages to allure-results
         run: |
-          sudo mkdir -p allure-results/history  # Создает директорию для истории Allure
+          # sudo mkdir -p allure-results/history  # Создает директорию для истории Allure
           sudo cp -R ./.github/gh-pages/history/* allure-results/history/
 
+      - name: Check dir between
+        run: /bin/sh -c "cd allure-results && ls -la && pwd"
 
       - name: Generate Allure report via Docker
         uses: addnab/docker-run-action@v3
@@ -61,13 +63,14 @@ jobs:
             -v ${{ github.workspace }}:/etc/allure
           run: /bin/sh -c "ls -la && pwd" &&
             allure generate
+            
       - name: Check dir after
-        run: /bin/sh -c "ls -la && pwd"
+        run: /bin/sh -c "cd allure-results && ls -la && pwd"
 
-      - name: Update Allure history
-        run: |
-          sudo cp -R allure-report/history/* ./.github/gh-pages/history/
-          
+      # - name: Update Allure history
+      #   run: |
+      #     sudo cp -R allure-report/history/* ./.github/gh-pages/history/
+
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
