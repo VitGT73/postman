@@ -49,7 +49,7 @@ jobs:
 
       - name: Copy history from gh-pages to allure-results
         run: |
-          # sudo mkdir -p allure-results/history  # Создает директорию для истории Allure
+          sudo mkdir -p allure-results/history  # Создает директорию для истории Allure
           sudo cp -R ./.github/gh-pages/history/* allure-results/history/
 
       - name: Check dir between
@@ -63,7 +63,7 @@ jobs:
             -v ${{ github.workspace }}:/etc/allure
           run: /bin/sh -c "ls -la && pwd" &&
             allure generate
-            
+
       - name: Check dir after
         run: /bin/sh -c "cd allure-results && ls -la && pwd"
 
