@@ -8,7 +8,7 @@ RUN npm install -g newman newman-reporter-htmlextra newman-reporter-allure \
     && mkdir -p ${ROOT} \
     && chown -R node:node ${ROOT}
 
-# WORKDIR ${ROOT}
+WORKDIR ${ROOT}
 # USER node
 
 CMD ["newman" "-v"]
